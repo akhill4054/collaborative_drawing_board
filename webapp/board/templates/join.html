@@ -1,0 +1,30 @@
+{% extends "base2.html" %}
+{% block title %} Join {% endblock %}
+{% block head %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/css/create.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="text-center">
+    <img class="mb-4"
+        src="https://img.icons8.com/external-linector-flat-linector/64/000000/external-whiteboard-university-linector-flat-linector.png"
+        alt="" width="72" height="72">
+    <h1 class="h3 mb-4 font-weight-normal">You're almost there, enter the<br>following details.</h1>
+    <form class="form-signin" action="" method="post">
+        {% csrf_token %}
+        <label for="inputMemberName" class="sr-only">Enter your name</label>
+        <input type="text" id="inputMemberName" value="{{ input_member_name|default:'' }}" name="inputMemberName" class="form-control"
+            placeholder="Enter your name" required>
+        <label for="inputSessionPassword" class="sr-only">Session password</label>
+        <input type="password" value="{{ input_session_password|default:'' }}" id="inputSessionName" class="form-control mt-2" name="inputSessionPassword"
+            placeholder="Session password" required>
+        <button id="btnJoin" class="btn mt-4 btn-lg btn-secondary btn-block" type="submit">Join</button>
+    </form>
+</div>
+{% endblock %}

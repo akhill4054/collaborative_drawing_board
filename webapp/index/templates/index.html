@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index/css/home.css' %}">
+{% endblock %}
+
+{% block body %}
+<body class="text-center">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <img class="masthead-brand" src="https://img.icons8.com/fluency/48/000000/whiteboard.png"/>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="/home/">Home</a>
+            <a class="nav-link" href="/home/features/">Features</a>
+            <a class="nav-link" href="/home/about/">About</a>
+          </nav>
+        </div>
+      </header>
+
+      <main role="main" class="inner cover">
+        <h1 class="cover-heading">Collaborative drawing board</h1>
+        <p class="lead">Our virtual whiteboard solution helps you to innovate ideas and solve complex problems together.</p>
+        <p class="lead mt-5">
+          <a href="/board/create/" class="btn btn-md btn-secondary font-weight-bold">Create a new board</a>
+        </p>
+        <p>-- or --</p>
+        <p class="lead">
+            <a href="/board/join/" class="btn btn-md btn-secondary font-weight-bold">Join an existing board</a>
+        </p>
+        <p class="lead mt-4">
+            {% if online_users and online_users >= 2 %}
+                {{ online_users }} users sketching their way to great results.
+            {% else %}
+                No one is online at the moment.
+            {% endif %}
+        </p>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Collaborate better. :)</p>
+        </div>
+      </footer>
+    </div>
+{% endblock %}

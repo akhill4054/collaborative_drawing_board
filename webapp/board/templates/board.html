@@ -1,0 +1,59 @@
+{% extends "base2.html" %}
+{% block title %} Live Board | {{ session_title }} {% endblock %}
+{% block head %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+{% load static %}
+<link rel="stylesheet" href="{% static 'board/css/board.css' %}">
+<script  type="text/javascript" src="{% static 'board/js/drawing/jscolor.js' %}"></script>
+<!-- Sokcket-IO -->
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block body %}
+<div>
+    <div id="controls" class="form-inline">
+        <input id="colorPicker" class="btn-sm btn-primary" data-jscolor="{closeButton:true, closeText:'Close', backgroundColor:'#333', buttonColor:'#FFF'}">
+        <div id="drwingControlsGroup" class="dashed-border ml-3 form-inline" style="padding: 0%;">
+            <div id="paintBrush" class="btn-sm btn-primary"  onclick="changeMode('pen')">
+                <img src="{% static 'board/images/paint_brush.png' %}" alt="Brush" width="27" height="27">
+            </div>
+            <div id="erasor" class="btn-sm btn-outline-light" onclick="changeMode('erase')">
+                <img src="{% static 'board/images/erasor.png' %}" alt="Erasor" width="27" height="27">
+            </div>
+        </div>
+        <div id="brushSizePickerDecorator" class="dashed-border ml-4 p-2">
+            <input id="brushSize" type="range" min="1" max="20" value="3" class="form-control-range" style="max-width: 90px;">
+        </div>
+        {% if is_host %}
+            <button class="ml-3 btn-sm btn-secondary" onclick="clearBoard();">Clear Board</button>
+        {% endif %}
+    </div>
+    <div id="boardContainer">
+        <canvas id="board"></canvas>
+    </div>
+    <div class="members">
+        <nav>
+            <ul id="memberList">
+            </ul>
+        </nav>
+    </div>
+    <div class="session-controls form-inline">
+        {% if is_host %}
+            <button id="btnEndSession" class="btn btn-danger" onclick="endSession();">End Session</button>
+        {% endif %}
+        <button id="btnShareInvitation" class="btn btn-light" onclick="shareInvitation()">Share Invitation</button>
+        <button id="btnLeaveBoard" class="btn btn-secondary" onclick="leaveBoard();">Leave Board</button>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    const sessionId = '{{ session_id }}';
+    const userSessionKey = '{{ user_session_key }}';
+</script>
+<script  type="text/javascript" src="{% static 'board/js/drawing/drawing.js' %}"></script>
+<script  type="text/javascript" src="{% static 'board/js/board.js' %}"></script>
+{% endblock %}

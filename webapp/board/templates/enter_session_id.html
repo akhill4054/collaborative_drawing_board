@@ -1,0 +1,24 @@
+{% extends "base2.html" %}
+{% block title %} Join {% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index/css/create.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="text-center">
+    <img class="mb-4" src="https://img.icons8.com/external-linector-flat-linector/64/000000/external-whiteboard-university-linector-flat-linector.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-4 font-weight-normal">Enter the session id.</h1>
+    <form class="form-signin"  action="" method="post">
+        {% csrf_token %}
+        <label for="inputSessionId" class="sr-only">Session id</label>
+        <input type="text" id="inputSessionId" value="{{ input_session_id|default:'' }}" name="inputSessionId" class="form-control" placeholder="Session id" required>
+        <button id="btnSubmitSessionId" class="btn mt-4 btn-lg btn-secondary btn-block" type="submit">Proceed</button>
+      </form>
+</div>
+{% endblock %}

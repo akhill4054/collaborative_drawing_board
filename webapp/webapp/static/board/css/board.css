@@ -1,0 +1,8 @@
+html,
+body {
+height: 100%;
+background-color: #6d80fc;
+}
+#board {
+    margin: 1%;
+}

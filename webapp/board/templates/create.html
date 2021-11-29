@@ -1,0 +1,25 @@
+{% extends "base2.html" %}
+{% block title %} Join {% endblock %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index/css/create.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="text-center">
+    <img class="mb-4" src="https://img.icons8.com/fluency/48/000000/whiteboard.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-4 font-weight-normal">Fill in the session details.</h1>
+    <form class="form-signin" action="" method="post">
+        {% csrf_token %}
+        <input type="text" value="{{ host_name|default:'' }}" name="inputHostName" maxlength="100" id="inputHostName" class="form-control" placeholder="Host name" autocomplete="username" required>
+        <input type="text" value="{{ session_title|default:'' }}" name="inputSessionTitle" id="inputSessionTitle" maxlength="50" class="form-control mt-3" placeholder="Session title" required>
+        <input type="password" value="{{ session_password|default:'' }}" name="inputSessionPassword" id="inputSessionPassword" maxlength="10" class="form-control mt-2" placeholder="Session password" autocomplete="new-password" required>
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Create board</button>
+    </form>
+</div>
+{% endblock %}
