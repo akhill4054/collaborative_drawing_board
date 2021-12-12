@@ -229,12 +229,6 @@ function drawPoints(ctx, points, fillColor, _brushSize, _mode) {
         ctx.quadraticCurveTo(points[i].x, points[i].y, c, d)
     }
     ctx.quadraticCurveTo(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y), ctx.stroke()
-
-    // Draw grids.
-    // Horizontal.
-
-    // Vertical.
-
 }
 
 // Creates an object with x and y defined,

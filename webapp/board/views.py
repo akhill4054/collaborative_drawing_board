@@ -17,7 +17,8 @@ def create_board(request):
         error_messages = []
 
         # Save user session.
-        request.session.save()
+        if not request.session.session_key:
+            request.session.save()
 
         if not request.session.session_key:
             error_messages.append('Session key not found, please try again.')
@@ -66,7 +67,8 @@ def enter_session_id(request):
             session_validation = validate_session(input_session_id)
             if session_validation['is_valid']:
                 # Save user session.
-                request.session.save()
+                if not request.session.session_key:
+                    request.session.save()
 
                 if (session_validation['board'].host_session_key == request.session.session_key
                         or get_or_none(session_validation['board'].member_set, user_session_key=request.session.session_key)):
@@ -90,7 +92,8 @@ def join_board(request, session_id):
     session_validation = validate_session(session_id)
 
     # Save user session.
-    request.session.save()
+    if not request.session.session_key:
+        request.session.save()
 
     if session_validation['is_valid']:
         if (session_validation['board'].host_session_key == request.session.session_key
@@ -146,9 +149,17 @@ def live_board(request, session_id):
     if not user_session_key:
         error_messages.append('User session not found, please rejoin the session.')
 
-    return render(request, "board.html", {
+    if board and user_session_key:
+        return render(request, "board.html", {
             'session_title': board.title,
             'session_id': board.pk,
             'user_session_key': request.session.session_key,
             'is_host': user_session_key == board.host_session_key,
+        })
+    else:
+        # TODO: Redirect to 404 page.
+        return render(request, "board.html", {
+            'session_title': '404',
+            'session_id': '',
+            'error_messages': error_messages,
         })

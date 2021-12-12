@@ -95,21 +95,26 @@ def draw(sid, data):
 
 @sio.on('clear-board', namespace='/board')
 def clear_board(sid):
-    res = has_host_privilages(sid)
-    if res:
-        data = { 'u': res.user_socket_session['username'], }
-        sio.emit('clear-board', data, room=res.user_socket_session['room'], namespace='/board')
+    host_data = has_host_privilages(sid)
+    if host_data.get('is_host', False):
+        if host_data:
+            socket_session_data = host_data['user_socket_session']
+            data = { 'u': socket_session_data['username'], }
+            sio.emit('clear-board', data, room=socket_session_data['room'], namespace='/board')
 
 
 @sio.on('end-session', namespace='/board')
 def end_session(sid):
-    res = has_host_privilages(sid)
-    if res:
-        user_socket_session = res['user_socket_session']
+    host_data = has_host_privilages(sid)
+    if host_data.get('is_host', False):
+        user_socket_session = host_data['user_socket_session']
         data = { 'msg': 'Session ended by the host.', }
 
         sio.emit('session-ended', data, room=user_socket_session['room'], skip_sid=sid, namespace='/board')
         
+        # Remove from db.
+        Board.objects.get(session_id=user_socket_session['room']).delete()
+
         return 'Ok'
     else:
         return None
